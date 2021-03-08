@@ -54,7 +54,9 @@ RUN mkdir /tmp/krew \
  && ./krew-linux_amd64 install krew \
  && cd \
  && rm -rf /tmp/krew \
+ && echo "source ~/.bashrc" >> .bash_profile \
  && echo "alias k='kubectl'" >> .bashrc \
+ && echo "alias kca='f(){ kubectl "$@" -A;  unset -f f; }; f'" >> .bashrc \
  && echo "source <(kubectl completion bash)" >> .bashrc \
  && echo "source <(kubectl completion bash | sed 's/kubectl/k/g')" >> .bashrc \
  && echo export 'PATH=$HOME/.krew/bin:$PATH' >> .bashrc
