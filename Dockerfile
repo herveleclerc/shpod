@@ -39,6 +39,8 @@ RUN cd /tmp \
  && cd kubectx \
  && mv kubectx /usr/local/bin/kctx \
  && mv kubens /usr/local/bin/kns \
+ && ln -s /usr/local/bin/kctx /usr/local/bin/kubectx \
+ && ln -s /usr/local/bin/kns /usr/local/bin/kubens \
  && mv completion/*.bash $COMPLETIONS \
  && cd .. \
  && rm -rf kubectx
@@ -52,6 +54,9 @@ RUN mkdir /tmp/krew \
  && ./krew-linux_amd64 install krew \
  && cd \
  && rm -rf /tmp/krew \
+ && echo "alias k='kubectl'" >> .bashrc \
+ && echo "source <(kubectl completion bash)" >> .bashrc \
+ && echo "source <(kubectl completion bash | sed 's/kubectl/k/g')" >> .bashrc \
  && echo export 'PATH=$HOME/.krew/bin:$PATH' >> .bashrc
 RUN curl -sSL https://github.com/derailed/k9s/releases/latest/download/k9s_$(uname -s)_$(uname -m).tar.gz \
   | tar -zxvf- -C /usr/local/bin k9s
